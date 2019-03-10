@@ -126,4 +126,26 @@ class UserController extends Controller
 
         return back();
     }
+
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function subscribers(User $user)
+    {
+        $users = $user->subscribers()->paginate();
+
+        return view('users.list', ['users' => $users]);
+    }
+
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function subscriptions(User $user)
+    {
+        $users = $user->subscriptions()->paginate();
+
+        return view('users.list', ['users' => $users]);
+    }
 }

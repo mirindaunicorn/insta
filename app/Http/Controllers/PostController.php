@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePost;
 use App\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -25,18 +27,23 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  CreatePost $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePost $request)
     {
-        //
+        $post = new Post();
+        $post->photo = $request->file('photo')->store('public');
+        $post->author()->associate(Auth::user());
+        $post->save();
+
+        return redirect()->route('posts.show', ['post' => $post]);
     }
 
     /**

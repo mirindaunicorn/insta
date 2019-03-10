@@ -18,6 +18,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::patch('/posts/{post}/like', 'PostController@like')->name('posts.like');
     Route::patch('/users/{user}/subscribe', 'UserController@subscribe')->name('users.subscribe');
+    Route::get('/users/{user}/subscriptions', 'UserController@subscriptions')->name('users.subscriptions');
+    Route::get('/users/{user}/subscribers', 'UserController@subscribers')->name('users.subscribers');
 
     Route::resource('users', 'UserController');
     Route::resource('posts', 'PostController');

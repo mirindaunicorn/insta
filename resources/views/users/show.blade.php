@@ -39,15 +39,20 @@
                                         </h3>
                                     </div>
                                     <div class="col-md-12">
-                                        <ul class="list-inline">
+                                        <ul class="list-inline stats">
                                             <li class="list-inline-item"><strong>{{$user->postsCount}}</strong>
                                                 publications
                                             </li>
                                             <li class="list-inline-item">
-                                                <strong>{{$user->subscribers()->count()}}</strong> subscribers
+                                                <a href="{{route('users.subscribers', ['user' => $user])}}">
+                                                    <strong>{{$user->subscribers()->count()}}</strong> subscribers
+                                                </a>
                                             </li>
-                                            <li class="list-inline-item">Subscribed:
-                                                <strong>{{$user->subscriptions()->count()}}</strong></li>
+                                            <li class="list-inline-item">
+                                                <a href="{{route('users.subscriptions', ['user' => $user])}}">Subscribed:
+                                                    <strong>{{$user->subscriptions()->count()}}</strong>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col-md-12">

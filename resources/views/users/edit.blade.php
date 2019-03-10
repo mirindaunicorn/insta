@@ -10,9 +10,9 @@
                     <div class="card-body">
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                <ul>
+                                <ul class="list-group list-group-flush">
                                     @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
+                                        <li class="list-group-item">{{ $error }}</li>
                                     @endforeach
                                 </ul>
                             </div>

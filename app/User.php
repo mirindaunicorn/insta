@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +44,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        return $value ? Storage::url($value) :  'http://instagram.inoutmkt.com.br/assets/img/no-avatar.png';
+        return $value ? Storage::url($value) : 'http://instagram.inoutmkt.com.br/assets/img/no-avatar.png';
     }
 
     /**
@@ -62,8 +63,21 @@ class User extends Authenticatable
         return $this->posts()->count();
     }
 
+    /**
+     * @param $value
+     */
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtolower($value);
+    }
+
+    public function admin(): HasOne
+    {
+        return $this->hasOne(Admin::class, 'user_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->admin()->exists();
     }
 }

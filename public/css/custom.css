@@ -75,6 +75,15 @@
     text-decoration: none;
 }
 
+.stats a {
+    color: #000;
+}
+
+.stats a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
 .post-title {
     color: #000;
     font-size: 25px;

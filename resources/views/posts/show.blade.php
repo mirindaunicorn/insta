@@ -8,7 +8,7 @@
                     <div class="card-header">
                         {{$post->created_at->format('d M Y H:i')}} <a
                             href="{{route('users.show', ['user' => $post->author])}}">{{'@'.$post->author->name}}</a>
-                        @if(!Auth::guest() && Auth::user()->id === $post->author->id)
+                        @if(!Auth::guest() && Auth::user()->isAdmin() || Auth::user()->id === $post->author->id)
                             <form style="display: inline;" method="POST" class="float-right"
                                   action="{{route('posts.destroy', ['post' => $post])}}"
                                   onSubmit="if(!confirm('Are you sure?')){return false;}"
@@ -63,7 +63,7 @@
                                 @foreach($post->comments as $comment)
                                     <div class="post-comment" id="comment-{{$comment->id}}">
                                         <a href="{{route('users.show', ['user' => $comment->author])}}"><strong>{{$comment->author->name}}</strong></a> {{$comment->body}}
-                                        @if(!Auth::guest() && (Auth::user()->id === $post->author->id || Auth::user()->id === $comment->author->id))
+                                        @if(!Auth::guest() && Auth::user()->isAdmin() || (Auth::user()->id === $post->author->id || Auth::user()->id === $comment->author->id))
                                             <form style="display: inline;" method="POST" class="float-right"
                                                   action="{{route('comments.destroy', ['comment' => $comment])}}"
                                                   onSubmit="if(!confirm('Are you sure?')){return false;}"

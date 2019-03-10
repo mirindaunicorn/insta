@@ -6,6 +6,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class Post
@@ -42,5 +43,10 @@ class Post extends Model
     public function getCommentsCountAttribute(): int
     {
         return $this->comments()->count();
+    }
+
+    public function getPhotoAttribute($value)
+    {
+        return $value ? Storage::url($value) : null;
     }
 }

@@ -39,7 +39,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
                     @if(!Auth::guest())
-                        <button class="btn btn-outline-success my-2 my-sm-0">New post</button>
+                        <a href="{{route('posts.create')}}" class="btn btn-outline-success my-2 my-sm-0">New post</a>
                     @endif
                 </ul>
 
@@ -60,6 +60,9 @@
                             </li>
                         @endif
                     @else
+                        @if(!Auth::guest() && Auth::user()->isAdmin())
+                            <a href="{{route('posts.create')}}" class="btn btn-outline-info">Dashboard</a>
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
