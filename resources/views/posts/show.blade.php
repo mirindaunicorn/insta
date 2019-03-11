@@ -5,34 +5,42 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        {{$post->created_at->format('d M Y H:i')}} <a
-                            href="{{route('users.show', ['user' => $post->author])}}">{{'@'.$post->author->name}}</a>
-                        @if(!Auth::guest() && Auth::user()->isAdmin() || Auth::user()->id === $post->author->id)
-                            <form style="display: inline;" method="POST" class="float-right"
-                                  action="{{route('posts.destroy', ['post' => $post])}}"
-                                  onSubmit="if(!confirm('Are you sure?')){return false;}"
-                            >
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-outline-danger btn-sm" type="submit">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form> @endif
-                    </div>
-
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <img src="{{$post->photo}}" class="img-fluid mx-auto d-block" alt="Likes: {{$post->likeCount}}">
+                                <a class="post-title"
+                                   href="{{route('users.by.name', ['name' => $post->author->name])}}">
+                                    <img src="{{$post->author->avatar}}"
+                                         alt="{{$post->author->name}}"
+                                         class="rounded-circle"
+                                         width="25px" height="25px"> {{$post->author->name}}
+                                </a>
+                                @if(!Auth::guest() && Auth::user()->isAdmin() || Auth::user()->id === $post->author->id)
+                                    <form style="display: inline;" method="POST" class="float-right"
+                                          action="{{route('posts.destroy', ['post' => $post])}}"
+                                          onSubmit="if(!confirm('Are you sure?')){return false;}"
+                                    >
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form> @endif
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-12">
+                                <img src="{{$post->photo}}" class="img-fluid mx-auto d-block"
+                                     alt="Likes: {{$post->likeCount}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 @if(!Auth::guest())
                                     <div class="actions">
                                         <div class="like"
                                              data-href="{{route('posts.like', ['post' => $post])}}">
+                                            {{$post->likeCount}}
                                             @if($post->liked())
                                                 <i class="fas fa-heart red"></i>
                                             @else
@@ -40,13 +48,14 @@
                                             @endif
                                         </div>
                                         <div class="comment">
-                                            <i class="far fa-comment"></i>
+                                            {{$post->commentsCount}} <i class="far fa-comment"></i>
+                                        </div>
+
+                                        <div class="float-right">
+                                            <small class="text-right">{{$post->created_at->format('d M Y H:i')}}</small>
                                         </div>
                                     </div>
                                 @endif
-                            </div>
-                            <div class="col-md-9 likes">
-                                Liked: <strong>{{$post->likeCount}}</strong>
                             </div>
                         </div>
                         <div class="row">
@@ -62,7 +71,7 @@
                                 @endif
                                 @foreach($post->comments as $comment)
                                     <div class="post-comment" id="comment-{{$comment->id}}">
-                                        <a href="{{route('users.show', ['user' => $comment->author])}}"><strong>{{$comment->author->name}}</strong></a> {{$comment->body}}
+                                        <a href="{{route('users.by.name', ['name' => $comment->author->name])}}"><strong>{{$comment->author->name}}</strong></a> {{$comment->body}}
                                         @if(!Auth::guest() && Auth::user()->isAdmin() || (Auth::user()->id === $post->author->id || Auth::user()->id === $comment->author->id))
                                             <form style="display: inline;" method="POST" class="float-right"
                                                   action="{{route('comments.destroy', ['comment' => $comment])}}"

@@ -5,20 +5,21 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Feed</div>
-
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
+                                @if(count($posts) === 0)
+                                    <h3 class="text-center">Try to subscribe to somebody!</h3>
+                                @endif
                                 @foreach($posts as $post)
                                     <div class="row">
                                         <div class="col-md-12">
                                             <a class="post-title"
-                                               href="{{route('users.show', ['user' => $post->author])}}">
+                                               href="{{route('users.by.name', ['name' => $post->author->name])}}">
                                                 <img src="{{$post->author->avatar}}"
                                                      alt="{{$post->author->name}}"
                                                      class="rounded-circle"
-                                                     width="25px"> {{$post->author->name}}
+                                                     width="25px" height="25px"> {{$post->author->name}}
                                             </a>
                                         </div>
                                     </div>
@@ -42,15 +43,21 @@
                                                     <a href="{{route('posts.show', ['post' => $post])}}">{{$post->commentsCount}}
                                                         <i class="far fa-comment"></i></a>
                                                 </div>
+                                                <div class="float-right">
+                                                    <small class="text-right">{{$post->created_at->format('d M Y H:i')}}</small>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                        <hr>
                                 @endforeach
                             </div>
                         </div>
-                        {{--<ul class="list-group list-group-flush">--}}
-
-                        {{--</ul>--}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{$posts->links()}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

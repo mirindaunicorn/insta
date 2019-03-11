@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\UnauthorizedException;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -56,11 +57,18 @@ class UserController extends Controller
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
         $posts = Post::where('user_id', '=', $user->id)->orderBy('created_at', 'DESC')->paginate();
 
         return view('users.show', ['user' => $user, 'posts' => $posts]);
+    }
+
+    public function showByName(string $name): View
+    {
+        $user = User::where('name', '=', $name)->firstOrFail();
+
+        return $this->show($user);
     }
 
     /**
@@ -71,7 +79,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user() !== $user && !Auth::user()->isAdmin()) {
+        if (Auth::user()->id !== $user->id && !Auth::user()->isAdmin()) {
             throw new UnauthorizedException('Unauthorized', 401);
         }
 
@@ -87,7 +95,7 @@ class UserController extends Controller
      */
     public function update(UpdateUser $request, User $user)
     {
-        if (Auth::user() !== $user && !Auth::user()->isAdmin()) {
+        if (Auth::user()->id !== $user->id && !Auth::user()->isAdmin()) {
             throw new UnauthorizedException('Unauthorized', 401);
         }
 

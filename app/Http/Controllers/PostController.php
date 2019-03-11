@@ -81,7 +81,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (Auth::user() !== $post->author() && !Auth::user()->isAdmin()) {
+        if (Auth::user()->id !== $post->author()->id && !Auth::user()->isAdmin()) {
             throw new UnauthorizedException('Unauthorized', 401);
         }
 
@@ -106,7 +106,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (Auth::user() === $post->author || Auth::user()->isAdmin()) {
+        if (Auth::user()->id === $post->author->id || Auth::user()->isAdmin()) {
             $post->delete();
         }
 

@@ -69,11 +69,11 @@
                                 <img src="{{Auth::user()->avatar}}"
                                      alt="{{Auth::user()->name}}"
                                      class="rounded-circle"
-                                     width="25px"> {{ Auth::user()->name }} <span class="caret"></span>
+                                     width="25px" height="25px"> {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('users.show', ['user' => Auth::user()]) }}">
+                                <a class="dropdown-item" href="{{route('users.by.name', ['name' => Auth::user()->name]) }}">
                                     My profile
                                 </a>
                                 <a class="dropdown-item" href="{{ route('users.edit', ['user' => Auth::user()]) }}">

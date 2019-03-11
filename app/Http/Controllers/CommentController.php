@@ -81,7 +81,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        if (Auth::user() !== $comment->author() && !Auth::user()->isAdmin()) {
+        if (Auth::user()->id !== $comment->author()->id && !Auth::user()->isAdmin()) {
             throw new UnauthorizedException('Unauthorized', 401);
         }
 
@@ -104,11 +104,11 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if (Auth::user() === $comment->author || Auth::user()->isAdmin()) {
+        if (Auth::user()->id === $comment->author->id || Auth::user()->isAdmin()) {
             $comment->delete();
         }
 
-        if(RequestFacade::has('back')) {
+        if (RequestFacade::has('back')) {
             return back();
         }
 

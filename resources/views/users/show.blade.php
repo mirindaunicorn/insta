@@ -10,10 +10,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="{{$user->avatar}}"
-                                     alt="{{$user->name}}"
-                                     class="rounded-circle"
-                                     width="130px">
+                                <div class="ratio img-responsive img-circle"
+                                     style="background-image: url({{$user->avatar}});"></div>
                             </div>
                             <div class="col-md-9">
                                 <div class="row">
@@ -87,6 +85,11 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                    </div>
+                                    <div class="row" style="padding-top: 20px;">
+                                        <div class="col-md-12">
+                                            {{$posts->links()}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

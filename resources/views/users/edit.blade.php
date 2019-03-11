@@ -47,8 +47,11 @@
 
                             </div>
                             <div class="form-group">
+
                                 <label for="avatar">Avatar</label>
                                 <input type="file" class="form-control-file" id="avatar" name="avatar">
+                                <hr>
+                                <img src="{{$user->avatar}}" alt="" width="50px" class="img-thumbnail">
                             </div>
                             <div class="form-group">
                                 <label for="bio">Bio</label>

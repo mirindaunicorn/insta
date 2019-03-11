@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{user}/subscribers', 'UserController@subscribers')->name('users.subscribers');
 
     Route::resource('users', 'UserController');
+    Route::get('/u/{name}', 'UserController@showByName')->name('users.by.name');
     Route::resource('posts', 'PostController');
     Route::resource('comments', 'CommentController');
 

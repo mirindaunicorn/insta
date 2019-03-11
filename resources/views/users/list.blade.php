@@ -11,11 +11,11 @@
                         <ul class="list-group list-group-flush">
                             @foreach($users as $user)
                                 <li class="list-group-item">
-                                    <a href="{{route('users.show', ['user' => $user])}}">
+                                    <a href="{{route('users.by.name', ['name' => $user->name])}}">
                                         <img src="{{$user->avatar}}"
                                              alt="{{$user->name}}"
                                              class="rounded-circle"
-                                             width="25px"> {{$user->name}}
+                                             width="25px" height="25px"> {{$user->name}}
                                     </a>
                                 </li>
                             @endforeach
