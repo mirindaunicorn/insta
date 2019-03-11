@@ -61,7 +61,7 @@
                         @endif
                     @else
                         @if(!Auth::guest() && Auth::user()->isAdmin())
-                            <a href="{{route('posts.create')}}" class="btn btn-outline-info">Dashboard</a>
+                            <a href="{{route('dashboard.index')}}" class="btn btn-outline-info">Dashboard</a>
                         @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -80,8 +80,7 @@
                                     Settings
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 

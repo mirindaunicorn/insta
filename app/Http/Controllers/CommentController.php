@@ -6,6 +6,8 @@ use App\Comment;
 use App\Http\Requests\StorePostComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as RequestFacade;
+use Illuminate\Validation\UnauthorizedException;
 
 class CommentController extends Controller
 {
@@ -79,7 +81,18 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        if (Auth::user() !== $comment->author() && !Auth::user()->isAdmin()) {
+            throw new UnauthorizedException('Unauthorized', 401);
+        }
+
+        $this->validate($request, [
+            'body' => 'required||max:255'
+        ]);
+
+        $comment->body = $request->get('body');
+        $comment->update();
+
+        return back();
     }
 
     /**
@@ -91,7 +104,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $comment->delete();
+        if (Auth::user() === $comment->author || Auth::user()->isAdmin()) {
+            $comment->delete();
+        }
+
+        if(RequestFacade::has('back')) {
+            return back();
+        }
 
         return redirect()->route('posts.show', ['post' => $comment->post]);
     }

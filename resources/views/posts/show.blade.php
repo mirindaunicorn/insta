@@ -15,7 +15,7 @@
                             >
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-outline-danger btn-sm">
+                                <button class="btn btn-outline-danger btn-sm" type="submit">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form> @endif
@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <img src="{{$post->photo}}" class="img-fluid" alt="Likes: 99">
+                                <img src="{{$post->photo}}" class="img-fluid mx-auto d-block" alt="Likes: {{$post->likeCount}}">
                             </div>
                         </div>
                         <div class="row">
@@ -70,7 +70,7 @@
                                             >
                                                 @csrf
                                                 @method('delete')
-                                                <button class="btn btn-outline-danger btn-sm"
+                                                <button class="btn btn-outline-danger btn-sm" type="submit"
                                                         style="padding: 0.01rem .2rem;">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>

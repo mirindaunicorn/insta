@@ -8,38 +8,49 @@
                     <div class="card-header">Feed</div>
 
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            @foreach($posts as $post)
-                                <li class="list-group-item">
-                                    <a class="post-title" href="{{route('users.show', ['user' => $post->author])}}">
-                                        <img src="{{$post->author->avatar}}"
-                                             alt="{{$post->author->name}}"
-                                             class="rounded-circle"
-                                             width="25px"> {{$post->author->name}}
-                                    </a>
-                                    <a href="{{route('posts.show', ['post' => $post])}}">
-                                        <img class="img-fluid" src="{{$post->photo}}"
-                                             alt="{{$post->author->name}}">
-                                    </a>
-                                    <div class="actions">
-                                        <div class="like"
-                                             data-href="{{route('posts.like', ['post' => $post])}}">
-                                            {{$post->likeCount}}
-                                            @if($post->liked())
-                                                <i class="fas fa-heart red"></i>
-                                            @else
-                                                <i class="far fa-heart"></i>
-                                            @endif
-                                        </div>
-                                        <div class="comment">
-                                            <a href="{{route('posts.show', ['post' => $post])}}">{{$post->commentsCount}}
-                                                <i class="far fa-comment"></i></a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @foreach($posts as $post)
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a class="post-title"
+                                               href="{{route('users.show', ['user' => $post->author])}}">
+                                                <img src="{{$post->author->avatar}}"
+                                                     alt="{{$post->author->name}}"
+                                                     class="rounded-circle"
+                                                     width="25px"> {{$post->author->name}}
+                                            </a>
                                         </div>
                                     </div>
-                                </li>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="{{route('posts.show', ['post' => $post])}}">
+                                                <img class="img-fluid mx-auto d-block" src="{{$post->photo}}"
+                                                     alt="{{$post->author->name}}">
+                                            </a>
+                                            <div class="actions">
+                                                <div class="like"
+                                                     data-href="{{route('posts.like', ['post' => $post])}}">
+                                                    {{$post->likeCount}}
+                                                    @if($post->liked())
+                                                        <i class="fas fa-heart red"></i>
+                                                    @else
+                                                        <i class="far fa-heart"></i>
+                                                    @endif
+                                                </div>
+                                                <div class="comment">
+                                                    <a href="{{route('posts.show', ['post' => $post])}}">{{$post->commentsCount}}
+                                                        <i class="far fa-comment"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{--<ul class="list-group list-group-flush">--}}
 
-                            @endforeach
-                        </ul>
+                        {{--</ul>--}}
                     </div>
                 </div>
             </div>

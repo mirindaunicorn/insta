@@ -24,5 +24,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', 'UserController');
     Route::resource('posts', 'PostController');
     Route::resource('comments', 'CommentController');
-});
 
+    Route::middleware(['only.admin'])->group(function () {
+        Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index');
+        Route::get('/dashboard/users', 'Dashboard\DashboardController@users')->name('dashboard.users');
+        Route::get('/dashboard/users/{user}/edit',
+            'Dashboard\DashboardController@editUser')->name('dashboard.users.edit');
+        Route::get('/dashboard/comments', 'Dashboard\DashboardController@comments')->name('dashboard.comments');
+        Route::get('/dashboard/comments/{comment}/edit',
+            'Dashboard\DashboardController@editComment')->name('dashboard.comments.edit');
+        Route::get('/dashboard/posts', 'Dashboard\DashboardController@posts')->name('dashboard.posts');
+        Route::get('/dashboard/posts/{post}/edit',
+            'Dashboard\DashboardController@editPost')->name('dashboard.posts.edit');
+    });
+});

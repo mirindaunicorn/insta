@@ -25,7 +25,7 @@ class StorePostComment extends FormRequest
     {
         return [
             'post_id' => 'exists:posts,id',
-            'body' => 'required'
+            'body' => 'required|max:255'
         ];
     }
 }

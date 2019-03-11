@@ -21,6 +21,15 @@ class Post extends Model
         'commentsCount'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Post $post) {
+            $post->comments()->delete();
+        });
+    }
+
     /**
      * @return BelongsTo
      */

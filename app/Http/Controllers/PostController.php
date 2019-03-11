@@ -7,6 +7,10 @@ use App\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as RequestFacade;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\UnauthorizedException;
+
 
 class PostController extends Controller
 {
@@ -77,7 +81,20 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if (Auth::user() !== $post->author() && !Auth::user()->isAdmin()) {
+            throw new UnauthorizedException('Unauthorized', 401);
+        }
+
+        $this->validate($request, [
+            'photo' => 'required|image'
+        ]);
+
+        Storage::delete($post->photo);
+
+        $post->photo = $request->file('photo')->store('public');
+        $post->update();
+
+        return back();
     }
 
     /**
@@ -89,7 +106,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        if (Auth::user() === $post->author || Auth::user()->isAdmin()) {
+            $post->delete();
+        }
+
+        if (RequestFacade::has('back')) {
+            return back();
+        }
 
         return redirect()->route('users.show', ['user' => $post->author]);
     }

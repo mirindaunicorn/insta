@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\UnauthorizedException;
 
 class UserController extends Controller
 {
@@ -70,6 +71,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if (Auth::user() !== $user && !Auth::user()->isAdmin()) {
+            throw new UnauthorizedException('Unauthorized', 401);
+        }
+
         return view('users.edit', ['user' => $user]);
     }
 
@@ -82,6 +87,10 @@ class UserController extends Controller
      */
     public function update(UpdateUser $request, User $user)
     {
+        if (Auth::user() !== $user && !Auth::user()->isAdmin()) {
+            throw new UnauthorizedException('Unauthorized', 401);
+        }
+
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->bio = $request->get('bio');
@@ -94,7 +103,7 @@ class UserController extends Controller
             $user->avatar = $request->file('avatar')->store('public');
         }
 
-        $user->save();
+        $user->update();
 
         return back();
     }
@@ -108,7 +117,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+
+        if (Auth::user()->isAdmin()) {
+            $user->delete();
+        }
 
         return back();
     }
