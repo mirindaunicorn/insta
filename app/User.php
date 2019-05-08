@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App;
 
@@ -10,6 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelFollow\Traits\CanBeSubscribed;
 use Overtrue\LaravelFollow\Traits\CanSubscribe;
 
+/**
+ * Class User
+ *
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable, CanSubscribe, CanBeSubscribed;

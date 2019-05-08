@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -11,19 +12,13 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\UnauthorizedException;
 
-
+/**
+ * Class PostController
+ *
+ * @package App\Http\Controllers
+ */
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -31,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('posts . create');
     }
 
     /**
@@ -47,7 +42,7 @@ class PostController extends Controller
         $post->author()->associate(Auth::user());
         $post->save();
 
-        return redirect()->route('posts.show', ['post' => $post]);
+        return redirect()->route('posts . show', ['post' => $post]);
     }
 
     /**
@@ -58,35 +53,23 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', ['post' => $post]);
+        return view('posts . show', ['post' => $post]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Post $post)
     {
-        if (Auth::user()->id !== $post->author()->id && !Auth::user()->isAdmin()) {
+        if (Auth::user()->id !== $post->author->id && !Auth::user()->isAdmin()) {
             throw new UnauthorizedException('Unauthorized', 401);
         }
 
         $this->validate($request, [
-            'photo' => 'required|image'
+            'photo' => 'required | image'
         ]);
 
         Storage::delete($post->photo);
@@ -114,7 +97,7 @@ class PostController extends Controller
             return back();
         }
 
-        return redirect()->route('users.show', ['user' => $post->author]);
+        return redirect()->route('users . show', ['user' => $post->author]);
     }
 
     /**

@@ -70,7 +70,7 @@
         <div class="sidebar-inner">
             <div class="sidebar-logo">
                 <div class="peers ai-c fxw-nw">
-                    <div class="peer peer-greed"><a class="sidebar-link td-n" href="index.html">
+                    <div class="peer peer-greed"><a class="sidebar-link td-n" href="{{route('dashboard.index')}}">
                             <div class="peers ai-c fxw-nw">
                                 <div class="peer">
                                     <div class="logo"><img src="{{asset('assets/static/images/logo.png')}}" alt="">

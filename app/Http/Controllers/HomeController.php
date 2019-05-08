@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -6,6 +7,11 @@ use App\Post;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class HomeController
+ *
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**

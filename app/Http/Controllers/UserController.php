@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\View\View;
 
+/**
+ * Class UserController
+ *
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
@@ -31,31 +37,10 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function show(User $user): View
     {
@@ -64,6 +49,10 @@ class UserController extends Controller
         return view('users.show', ['user' => $user, 'posts' => $posts]);
     }
 
+    /**
+     * @param string $name
+     * @return View
+     */
     public function showByName(string $name): View
     {
         $user = User::where('name', '=', $name)->firstOrFail();
@@ -133,6 +122,10 @@ class UserController extends Controller
         return back();
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function subscribe(User $user)
     {
         /** @var User $iam */

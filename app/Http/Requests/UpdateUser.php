@@ -1,10 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class UpdateUser
+ *
+ * @package App\Http\Requests
+ */
 class UpdateUser extends FormRequest
 {
     /**

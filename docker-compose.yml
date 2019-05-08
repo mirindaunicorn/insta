@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
+    image: mirindaunicorn/instagram:latest
     container_name: app
     restart: unless-stopped
     tty: true
@@ -15,10 +15,10 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
-      - ./:/var/www
-      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    - ./:/var/www
+    - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - app-network
+    - app-network
 
   #Nginx Service
   webserver:
@@ -27,13 +27,13 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
-      - "443:443"
+    - "80:80"
+    - "443:443"
     volumes:
-      - ./:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    - ./:/var/www
+    - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - app-network
+    - app-network
 
   #MySQL Service
   db:
@@ -42,28 +42,28 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+    - "3306:3306"
     environment:
       MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: artisan mi
+      MYSQL_ROOT_PASSWORD: qwerty123
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - dbdata:/var/lib/mysql/
+    - dbdata:/var/lib/mysql/
     networks:
-      - app-network
+    - app-network
 
-
+  #Redis Service
   redis:
     image: 'bitnami/redis:latest'
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+    - ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - '6379:6379'
+    - '6379:6379'
     volumes:
-      - redis:/bitnami
+    - redis:/bitnami
     networks:
-      - app-network
+    - app-network
 
 #Docker Networks
 networks:
